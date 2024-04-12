@@ -3,10 +3,26 @@ import { CiViewBoard } from "react-icons/ci";
 import { CiViewList } from "react-icons/ci";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosClose } from "react-icons/io";
+import { toast } from "react-toastify";
 
 const FormStepThree = ({ onNext, onPrev, formData, setFormData }) => {
   const handleViewSelect = (viewType) => {
     setFormData({ ...formData, viewType: viewType });
+  };
+
+  const handleNext = (e) => {
+    e.preventDefault();
+    const errors = {};
+    if (!formData.viewType) {
+      errors.projectName = "View Type is required";
+    }
+    if (Object.keys(errors).length > 0) {
+      Object.values(errors).forEach((error) => {
+        toast.error(error);
+      });
+    } else {
+      onNext();
+    }
   };
 
   return (
@@ -62,7 +78,7 @@ const FormStepThree = ({ onNext, onPrev, formData, setFormData }) => {
           <button
             type="submit"
             className="items-center justify-center bg-blue-500 text-white rounded-md h-[40px] px-7"
-            onClick={onNext}
+            onClick={handleNext}
           >
             Next
           </button>

@@ -2,6 +2,7 @@ import React from "react";
 import { FaRupeeSign } from "react-icons/fa";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosClose } from "react-icons/io";
+import { toast } from "react-toastify";
 
 const FormStepTwo = ({ onNext, onPrev, formData, setFormData }) => {
   const handleChange = (e) => {
@@ -10,6 +11,30 @@ const FormStepTwo = ({ onNext, onPrev, formData, setFormData }) => {
       ...prevData,
       [name]: type === "checkbox" ? checked : value,
     }));
+  };
+
+  const handleNext = (e) => {
+    e.preventDefault();
+    const errors = {};
+    if (!formData.projectType) {
+      errors.projectType = "Project Type is required";
+    }
+    if (!formData.hourlyRate) {
+      errors.hourlyRate = "Project Hourly Rate is required";
+    }
+    if (!formData.budget) {
+      errors.budget = "Budget is required";
+    }
+    if (!formData.endDate) {
+      errors.endDate = "End Date is required";
+    }
+    if (Object.keys(errors).length > 0) {
+      Object.values(errors).forEach((error) => {
+        toast.error(error);
+      });
+    } else {
+      onNext();
+    }
   };
 
   return (
@@ -25,13 +50,40 @@ const FormStepTwo = ({ onNext, onPrev, formData, setFormData }) => {
       </p>
       <form className="flex  flex-col gap-3 p-[35px] pt-6 pb-[10px]">
         <div className="flex my-2 border border-gray-300 rounded-md">
-          <button type="button" className="flex-1 text-center text-sm text-gray-500 border-r border-gray-300 rounded-l-md py-2 cursor-pointer hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white"  onClick={() => setFormData((prevData) => ({ ...prevData, projectType: "Time & Materials" }))}>
+          <button
+            type="button"
+            className="flex-1 text-center text-sm text-gray-500 border-r border-gray-300 rounded-l-md py-2 cursor-pointer hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white"
+            onClick={() =>
+              setFormData((prevData) => ({
+                ...prevData,
+                projectType: "Time & Materials",
+              }))
+            }
+          >
             Time & Materials
           </button>
-          <button type="button" className="flex-1 text-center text-sm text-gray-500 border-r border-gray-300 py-2 cursor-pointer hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white" onClick={() => setFormData((prevData) => ({ ...prevData, projectType: "Fixed Fee" }))}>
+          <button
+            type="button"
+            className="flex-1 text-center text-sm text-gray-500 border-r border-gray-300 py-2 cursor-pointer hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white"
+            onClick={() =>
+              setFormData((prevData) => ({
+                ...prevData,
+                projectType: "Fixed Fee",
+              }))
+            }
+          >
             Fixed Fee
           </button>
-          <button type="button" className="flex-1 text-center text-sm text-gray-500 border-r border-gray-300 rounded-r-md py-2 cursor-pointer hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white" onClick={() => setFormData((prevData) => ({ ...prevData, projectType: "Non-Billable" }))}>
+          <button
+            type="button"
+            className="flex-1 text-center text-sm text-gray-500 border-r border-gray-300 rounded-r-md py-2 cursor-pointer hover:bg-blue-500 hover:text-white focus:bg-blue-500 focus:text-white"
+            onClick={() =>
+              setFormData((prevData) => ({
+                ...prevData,
+                projectType: "Non-Billable",
+              }))
+            }
+          >
             Non-Billable
           </button>
         </div>
@@ -139,7 +191,7 @@ const FormStepTwo = ({ onNext, onPrev, formData, setFormData }) => {
           </button>
           <button
             type="submit"
-            onClick={onNext}
+            onClick={handleNext}
             className="items-center justify-center bg-blue-500 text-white rounded-md h-[40px] px-7"
           >
             Next

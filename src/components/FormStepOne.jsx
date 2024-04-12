@@ -3,10 +3,17 @@ import { FaPlus } from "react-icons/fa";
 import { CiCalendar } from "react-icons/ci";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosClose } from "react-icons/io";
+import { toast } from "react-toastify";
 
-const FormStepOne = ({ onNext, formData, setFormData, addNewClient, clients }) => {
+const FormStepOne = ({
+  onNext,
+  formData,
+  setFormData,
+  addNewClient,
+  clients,
+}) => {
   const [showNewClientForm, setShowNewClientForm] = useState(false);
-    const [newClientName, setNewClientName] = useState("");
+  const [newClientName, setNewClientName] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,10 +34,33 @@ const FormStepOne = ({ onNext, formData, setFormData, addNewClient, clients }) =
 
   const handleNewClientSubmit = (e) => {
     e.preventDefault();
-    addNewClient(newClientName); 
+    addNewClient(newClientName);
     setShowNewClientForm(false);
   };
 
+  const handleNext = (e) => {
+    e.preventDefault()
+    const errors = {};
+    if (!formData.projectName) {
+      errors.projectName = "Project Name is required";
+    }
+    if (!formData.client) {
+      errors.client = "Client is required";
+    }
+    if (!formData.startDate) {
+      errors.startDate = "Start Date is required";
+    }
+    if (!formData.endDate) {
+      errors.endDate = "End Date is required";
+    }
+    if (Object.keys(errors).length > 0) {
+      Object.values(errors).forEach((error) => {
+        toast.error(error);
+      });
+    } else {
+      onNext();
+    }
+  };
 
   return (
     <div>
@@ -63,7 +93,7 @@ const FormStepOne = ({ onNext, formData, setFormData, addNewClient, clients }) =
               onChange={handleChange}
               className="flex-1 appearance-none border-1 border-gray-300 px-4 h-[35px] rounded-md text-gray-500 text-sm"
             >
-               {clients.map((client) => (
+              {clients.map((client) => (
                 <option key={client} value={client}>
                   {client}
                 </option>
@@ -153,7 +183,7 @@ const FormStepOne = ({ onNext, formData, setFormData, addNewClient, clients }) =
           </button>
           <button
             type="submit"
-            onClick={onNext}
+            onClick={handleNext}
             className="items-center justify-center bg-blue-500 text-white rounded-md h-[40px] px-7"
           >
             Next

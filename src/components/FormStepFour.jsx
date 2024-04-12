@@ -4,6 +4,7 @@ import { RiAdminLine } from "react-icons/ri";
 import { SlPeople } from "react-icons/sl";
 import { IoIosClose } from "react-icons/io";
 import { IoIosArrowBack } from "react-icons/io";
+import { toast } from "react-toastify";
 
 const FormStepFour = ({ onPrev, formData, setFormData, setCurrentPage }) => {
   const [selectedOption, setSelectedOption] = useState("");
@@ -13,25 +14,36 @@ const FormStepFour = ({ onPrev, formData, setFormData, setCurrentPage }) => {
     setFormData({ ...formData, projectManagement: option });
   };
 
-  const handleSubmit = () => {
-    console.log("Form Data:", formData);
-    localStorage.setItem("formData", JSON.stringify(formData));
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const errors = {};
+    if (!formData.projectManagement) {
+      errors.projectName = "Project Management is required";
+    }
+    if (Object.keys(errors).length > 0) {
+      Object.values(errors).forEach((error) => {
+        toast.error(error);
+      });
+    } else {
+      console.log("Form Data:", formData);
+      localStorage.setItem("formData", JSON.stringify(formData));
 
-    setFormData({
-      projectName: "",
-      client: "",
-      startDate: "",
-      endDate: "",
-      notes: "",
-      projectType: "",
-      hourlyRate: "",
-      budget: "",
-      budgetReset: false,
-      emailAlerts: false,
-      viewType: "",
-      projectManagement: "",
-    });
-    setCurrentPage(1);
+      setFormData({
+        projectName: "",
+        client: "",
+        startDate: "",
+        endDate: "",
+        notes: "",
+        projectType: "",
+        hourlyRate: "",
+        budget: "",
+        budgetReset: false,
+        emailAlerts: false,
+        viewType: "",
+        projectManagement: "",
+      });
+      setCurrentPage(1);
+    }
   };
 
   return (
