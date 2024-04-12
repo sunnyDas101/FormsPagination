@@ -1,0 +1,108 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: #efefef;
+  font-family: "Poppins", sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
+}
+
+li {
+  list-style: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  cursor: pointer;
+  position: absolute;
+  left: 13px;
+  z-index: 999;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.pagination {
+  margin-bottom: 20px;
+  color: lightgray;
+  display: flex;
+  gap: 2px;
+}
+
+.pagination span {
+  cursor: pointer;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+.pagination span.active {
+  color: darkgray;
+  border-radius: 20px;
+}
+
+.border-focus-blue:focus-within {
+  border-color: #3b82f6;
+}
+
+li {
+  list-style: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  cursor: pointer;
+  position: absolute;
+  left: 13px;
+  z-index: 999;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.pagination {
+  margin-bottom: 20px;
+  color: lightgray;
+  display: flex;
+  gap: 2px;
+}
+
+.pagination span {
+  cursor: pointer;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+.pagination span.active {
+  color: darkgray;
+  border-radius: 20px;
+}
+
+.bordered-button:hover {
+  background-color: #3182ce; 
+  color: #fff; 
+}
+
+.bordered-button:focus {
+  background-color: #3182ce; 
+  color: #fff; 
+}
+
+
+
+
