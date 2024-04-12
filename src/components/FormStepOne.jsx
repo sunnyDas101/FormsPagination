@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { CiCalendar } from "react-icons/ci";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosClose } from "react-icons/io";
 
-const FormStepOne = ({ onNext, formData, setFormData }) => {
+const FormStepOne = ({ onNext, formData, setFormData, addNewClient, clients }) => {
+  const [showNewClientForm, setShowNewClientForm] = useState(false);
+    const [newClientName, setNewClientName] = useState("");
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -13,6 +16,21 @@ const FormStepOne = ({ onNext, formData, setFormData }) => {
   const handleDateChange = (dateValue, name) => {
     setFormData({ ...formData, [name]: dateValue });
   };
+
+  const handleAddNewClient = () => {
+    setShowNewClientForm(true);
+  };
+
+  const handleNewClientNameChange = (e) => {
+    setNewClientName(e.target.value);
+  };
+
+  const handleNewClientSubmit = (e) => {
+    e.preventDefault();
+    addNewClient(newClientName); 
+    setShowNewClientForm(false);
+  };
+
 
   return (
     <div>
@@ -45,22 +63,45 @@ const FormStepOne = ({ onNext, formData, setFormData }) => {
               onChange={handleChange}
               className="flex-1 appearance-none border-1 border-gray-300 px-4 h-[35px] rounded-md text-gray-500 text-sm"
             >
-              <option value="">Select a client</option>
-              <option value="client1">Client 1</option>
-              <option value="client2">Client 2</option>
-              <option value="client3">Client 3</option>
+               {clients.map((client) => (
+                <option key={client} value={client}>
+                  {client}
+                </option>
+              ))}
             </select>
 
             <span className="text-sm text-gray-500">Or</span>
 
             <button
               type="button"
+              onClick={handleAddNewClient}
               className="flex flex-2 gap-2 items-center text-sm text-gray-500 border border-gray-300 rounded-md h-[35px] px-4"
             >
               <FaPlus style={{ fontSize: "0.7rem" }} /> New client
             </button>
           </div>
         </div>
+
+        {showNewClientForm && (
+          <div className="flex flex-col gap-2">
+            <label htmlFor="newClientName">New Client Name</label>
+            <input
+              type="text"
+              name="newClientName"
+              value={newClientName}
+              onChange={handleNewClientNameChange}
+              placeholder="Enter new client name"
+              className="border-1 border-gray-300 rounded-md h-[35px] px-4 outline-none text-gray-500 placeholder:text-sm focus:border-blue-400"
+            />
+            <button
+              type="submit"
+              onClick={handleNewClientSubmit}
+              className="bg-blue-500 text-white rounded-md h-[40px] px-7"
+            >
+              Add Client
+            </button>
+          </div>
+        )}
 
         <div className="flex flex-col gap-2">
           <label htmlFor="dates">Dates</label>

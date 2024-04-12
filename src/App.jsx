@@ -22,6 +22,17 @@ const App = () => {
     projectManagement: "",
   });
 
+  const [clients, setClients] = useState([
+    "Select a Client...",
+    "Client 1",
+    "Client 2",
+    "Client 3",
+  ]);
+
+  const addNewClient = (newClient) => {
+    setClients([...clients, newClient]);
+  };
+
   const pageArr = [1, 2, 3, 4];
 
   const nextPage = () => {
@@ -40,6 +51,8 @@ const App = () => {
             onNext={nextPage}
             formData={formData}
             setFormData={setFormData}
+            addNewClient={addNewClient}
+            clients={clients}
           />
         )}
         {currentPage === 2 && (
